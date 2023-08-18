@@ -9,7 +9,7 @@ function App() {
   ]);
   const [newTodoText, setNewTodoText] = useState("");
 
-  const toggleComplete = (id) => {};
+  // const toggleComplete = (id) => {};
 
   const updateTodo = (id, newText) => {
     setTodos((prev) =>
