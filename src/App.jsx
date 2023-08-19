@@ -8,22 +8,21 @@ function App() {
     { id: 2, text: "Todo 2", completed: false },
   ]);
   const [newTodoText, setNewTodoText] = useState("");
-
-  // const toggleComplete = (id) => {};
+  const [emptyTodoError, setEmptyTodoError] = useState(false);
 
   const updateTodo = (id, newText) => {
     setTodos((prev) =>
-      prev.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, text: newText };
-        }
-        return todo;
-      })
+      prev.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
     );
   };
 
   const deleteTodo = (id) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this todo?"
+    );
+    if (confirmDelete) {
+      setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    }
   };
 
   const addTodo = () => {
@@ -35,6 +34,12 @@ function App() {
       };
       setTodos((prev) => [...prev, newTodo]);
       setNewTodoText("");
+      setEmptyTodoError(false);
+    } else {
+      setEmptyTodoError(true);
+      setTimeout(() => {
+        setEmptyTodoError(false);
+      }, 2000);
     }
   };
 
@@ -46,11 +51,20 @@ function App() {
           <input
             type="text"
             value={newTodoText}
-            onChange={(e) => setNewTodoText(e.target.value)}
+            onChange={(e) => {
+              setNewTodoText(e.target.value);
+              setEmptyTodoError(false);
+            }}
             placeholder="New Todo ..."
+            required
           />
-          <button onClick={addTodo}>Add Todo</button>
+          <button onClick={addTodo} className="btn">
+            Add Todo
+          </button>
         </div>
+        {emptyTodoError && (
+          <p className="error">You cannot add an empty todo !</p>
+        )}
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}

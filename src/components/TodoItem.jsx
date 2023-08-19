@@ -15,25 +15,27 @@ function TodoItem({ todo, updateTodo, deleteTodo }) {
     }
   };
 
-  const handleDelete = () => {
-    deleteTodo(todo.id);
-  };
-
   return (
-    <div>
+    <div className="one-todo">
       {isEditing ? (
-        <div>
-          <input value={text} onChange={(e) => setText(e.target.value)} />
-          <button onClick={handleUpdate}>Update</button>
-        </div>
+        <>
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="update"
+          />
+          <button onClick={handleUpdate} className="btn">
+            Update
+          </button>
+        </>
       ) : (
-        <div className="one-todo">
+        <>
           <p className="txt">{text}</p>
           <div className="btns">
             <button onClick={handleEditClick}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
