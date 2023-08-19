@@ -56,7 +56,6 @@ function App() {
               setEmptyTodoError(false);
             }}
             placeholder="New Todo ..."
-            required
           />
           <button onClick={addTodo} className="btn">
             Add Todo
